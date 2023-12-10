@@ -18,19 +18,22 @@ import org.bukkit.inventory.recipe.CraftingBookCategory;
 import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Unmodifiable;
+
 import quest.extremeyuri.relationships.Tags;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
+import static quest.extremeyuri.relationships.ComponentStyles.*;
+
+
 public class Recipes {
     static Server server = Bukkit.getServer();
     static Logger logger = Bukkit.getLogger();
 
     // Wedding ring Components to be used as item name and description...
-    private static final Component weddingRingDispName = Component.text("Wedding Ring").color(TextColor.color(0x19CDFF))
-            .decorate(TextDecoration.BOLD).decoration(TextDecoration.ITALIC, TextDecoration.State.FALSE);
+    private static final Component weddingRingDispName = Component.text("Wedding Ring").style(weddingRingStyle).decorate(TextDecoration.BOLD);
     private static final List<Component> weddingRingDesc = new ArrayList<Component>();
 
     // Declaring relevant pieces of: weddingRing
@@ -42,9 +45,9 @@ public class Recipes {
     private static void makeWeddingRing(){
         // Wedding ring item stack.
         // Lore...
-        weddingRingDesc.add(Component.text("Give this wedding ring to"));
-        weddingRingDesc.add(Component.text("someone you really love to"));
-        weddingRingDesc.add(Component.text("commemorate your eternal bond!"));
+        weddingRingDesc.add(Component.text("Give this wedding ring to").style(relationshipItemDesc));
+        weddingRingDesc.add(Component.text("someone ").style(relationshipItemDesc).append(Component.text("you really love to").style(weddingRingStyle)));
+        weddingRingDesc.add(Component.text("commemorate your eternal bond!").style(relationshipItemDesc));
 
         // Defining ItemMeta for the weddingRing.
         weddingRingMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
@@ -64,8 +67,7 @@ public class Recipes {
 
     // Love letter.
     // Components for title and lore...
-    private static final Component loveLetterDispName = Component.text("Love Letter").color(TextColor.color(0xdb2e0b))
-            .decorate(TextDecoration.BOLD).decoration(TextDecoration.ITALIC, TextDecoration.State.FALSE);
+    private static final Component loveLetterDispName = Component.text("Love Letter").style(loveLetterStyle).decorate(TextDecoration.BOLD);
     private static final List<Component> loveLetterDesc = new ArrayList<Component>();
 
     // Declaring relevant pieces of: divorce papers
@@ -76,8 +78,8 @@ public class Recipes {
 
     private static void makeLoveLetters(){
         // Lore...\
-        loveLetterDesc.add(Component.text("Hand this to someone you like"));
-        loveLetterDesc.add(Component.text("and let them know how you feel~!"));
+        loveLetterDesc.add(Component.text("Hand this to someone you like").style(relationshipItemDesc));
+        loveLetterDesc.add(Component.text("and").style(relationshipItemDesc).append(Component.text(" let them know how you feel~!").style(loveLetterStyle)));
 
         // Item meta...
         loveLetterMeta.displayName(loveLetterDispName);
@@ -93,11 +95,9 @@ public class Recipes {
         loveLetterRecipe.setCategory(CraftingBookCategory.MISC);
     }
 
-
     // Divorce papers.
     // Components for title and lore...
-    private static final Component divorcePapersDispName = Component.text("Divorce Papers").color(TextColor.color(0xdb2e0b))
-            .decorate(TextDecoration.BOLD).decoration(TextDecoration.ITALIC, TextDecoration.State.FALSE);
+    private static final Component divorcePapersDispName = Component.text("Divorce Papers").style(divorceStyle).decorate(TextDecoration.BOLD);
     private static final List<Component> divorcePapersDesc = new ArrayList<Component>();
 
     // Declaring relevant pieces of: divorce papers
@@ -108,10 +108,9 @@ public class Recipes {
 
     private static void makeDivorcePapers(){
         // Lore...
-        divorcePapersDesc.add(Component.text("Break their heart and ").append(Component.text("end").color(TextColor.color(0xdb2e0b)).decorate(TextDecoration.BOLD)));
-        divorcePapersDesc.add(Component.text("your relationship..."));
-        divorcePapersDesc.add(Component.text("(even if it never started)"));
-        divorcePapersDesc.add(Component.text("Warning! Heartbreak hurts!").color(TextColor.fromHexString("db2e0b")).decorate(TextDecoration.BOLD));
+        divorcePapersDesc.add(Component.text("End it").style(divorceStyle).append(Component.text(" with style, humility, and grace...").style(relationshipItemDesc)));
+        divorcePapersDesc.add(Component.text("...or, y'know, something else!").style(divorceStyle));
+        divorcePapersDesc.add(Component.text("Warning!").style(divorceStyle).append(Component.text(" Heartbreak can").style(relationshipItemDesc)).append(Component.text(" seriously hurt!").style(divorceStyle)));
 
         divorcePapersMeta.displayName(divorcePapersDispName);
         divorcePapersMeta.lore(divorcePapersDesc);
@@ -128,24 +127,24 @@ public class Recipes {
     public static void addRecipes(){
         makeWeddingRing();
         if(server.addRecipe(weddingRingRecipe)){
-            logger.info("Recipe added: wedding ring.");
+            logger.info("[Relationships] Recipe added: wedding ring.");
         }
         else{
-            logger.info("ERR: WR Recipe not added.");
+            logger.info("[Relationships] ERR: WR Recipe not added.");
         }
         makeDivorcePapers();
         if(server.addRecipe(divorceRecipe)){
-            logger.info("Recipe added: divorce papers.");
+            logger.info("[Relationships] Recipe added: divorce papers.");
         }
         else{
-            logger.info("ERR: DP Recipe not added.");
+            logger.info("[Relationships] ERR: DP Recipe not added.");
         }
         makeLoveLetters();
         if(server.addRecipe(loveLetterRecipe)){
-            logger.info("Recipe added: love letters.");
+            logger.info("[Relationships] Recipe added: love letters.");
         }
         else{
-            logger.info("ERR: LL Recipe not added.");
+            logger.info("[Relationships] ERR: LL Recipe not added.");
         }
     }
 
